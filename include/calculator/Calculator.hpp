@@ -31,7 +31,7 @@
 
 #pragma once
 
-#include "CalculatorExport.hpp"
+#include "calculator/CalculatorExport.hpp"
 
 #include <memory>
 

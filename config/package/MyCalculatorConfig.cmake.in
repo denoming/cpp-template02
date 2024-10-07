@@ -1,0 +1,12 @@
+@PACKAGE_INIT@
+
+# Checking dependencies (remove if not needed)
+#[[
+include(CMakeFindDependencyMacro)
+find_dependency(Dependency1)
+find_dependency(Dependency2)
+]]
+
+# Include project export file
+list(APPEND CMAKE_MODULE_PATH "@PACKAGE_cmakeModulesDir@")
+include(MyCalculator)
