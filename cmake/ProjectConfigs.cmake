@@ -1,6 +1,8 @@
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/modules")
 
 include(BuildType)
+include(BuildLocation)
+include(BuildOptions)
 
 if (TEMPLATE02_ENABLE_TESTS)
     enable_testing()
