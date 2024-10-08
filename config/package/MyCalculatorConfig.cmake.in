@@ -1,12 +1,19 @@
+if(CMAKE_VERSION VERSION_LESS 3.28)
+    set(${CMAKE_FIND_PACKAGE_NAME}_NOT_FOUND_MESSAGE "Template02 requires CMake 3.28 or later")
+    set(${CMAKE_FIND_PACKAGE_NAME}_FOUND FALSE)
+    return()
+endif()
+cmake_minimum_required(VERSION 3.28)
+
 @PACKAGE_INIT@
 
-# Checking dependencies (remove if not needed)
+# Check dependencies (remove if not needed)
 #[[
 include(CMakeFindDependencyMacro)
 find_dependency(Dependency1)
 find_dependency(Dependency2)
 ]]
 
-# Include project export file
+# Include project export files
 list(APPEND CMAKE_MODULE_PATH "@PACKAGE_cmakeModulesDir@")
-include(MyCalculator)
+include(${CMAKE_CURRENT_LIST_DIR}/MyCalculator.cmake)
