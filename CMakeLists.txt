@@ -7,7 +7,9 @@ project(Template02
 
 include(cmake/ProjectOptions.cmake)
 include(cmake/ProjectConfigs.cmake)
-include(cmake/ProjectInstall.cmake)
+if(PROJECT_IS_TOP_LEVEL)
+    include(cmake/ProjectInstall.cmake)
+endif()
 
 add_subdirectory(config)
 add_subdirectory(src)
