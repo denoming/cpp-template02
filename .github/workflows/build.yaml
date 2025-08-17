@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    branches: [ "main" ]
+
+env:
+  BUILD_TYPE: Release
+  BUILD_ROOT: build-ci
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: denoming/base:python3.13-trixie
+    steps:
+      - name: Project - Checkout
+        uses: actions/checkout@v4
+      - name: Project - Configure
+        run: >
+          cmake -B ${{ env.BUILD_ROOT }}
+          -DCMAKE_BUILD_TYPE=${{ env.BUILD_TYPE }}
+          -DTEMPLATE02_ENABLE_TESTS=ON
+      - name: Project - Build
+        run: cmake --build ${{ env.BUILD_ROOT }} --parallel
+      - name: Project - Test
+        id: test
+        working-directory: ${{ env.BUILD_ROOT }}
+        run: ctest -C ${{ env.BUILD_TYPE }} --output-junit report.xml
+      - name: Project - Archive
+        if: failure() && steps.test.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          path: ${{ env.BUILD_ROOT }}/report.xml
+ 
